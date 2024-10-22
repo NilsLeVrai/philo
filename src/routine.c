@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niabraha <niabraha@42.fr>                  +#+  +:+       +#+        */
+/*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 13:19:10 by niabraha          #+#    #+#             */
-/*   Updated: 2023/11/09 17:25:34 by niabraha         ###   ########.fr       */
+/*   Created: 2024/10/22 10:45:42 by niabraha          #+#    #+#             */
+/*   Updated: 2024/10/22 14:42:52 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/philo.h"
 
-int	ft_isascii(int c)
+void	ft_routine(char **argv)
 {
-	if (c >= 0 && c <= 127)
-		return (1);
-	return (0);
+	(void)argv;
 }
