@@ -6,11 +6,28 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:11 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/22 15:09:07 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:21:38 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+static long get_current_time(void)
+{
+	static long start_time;
+	time_t temp_time;
+	struct timeval current_time;
+
+	start_time = 0;
+	temp_time = 0;
+	if (gettimeofday(&current_time, NULL))
+	{
+		printf("Error: gettimeofday failed.\n");
+		exit(EXIT_FAILURE);
+	}
+	temp_time = current_time.tv_sec * 1000 + current_time.tv_usec / 1000;
+	return (temp_time - start_time);
+}
 
 static void test(t_global *philo)
 {
@@ -26,12 +43,18 @@ static void test(t_global *philo)
 	printf("" RESET);
 }
 
+/*
+global = valeurs des arguments
+philo = valeus propres a chaque philo
+*/
+
 int	main(int argc, char **argv)
 {
 	t_global	*global;
 	int		i;
 
 	i = 0;
+	get_current_time();
 	check_errors(argc, argv);
 	global = malloc(sizeof(t_global));
 	if (!global)
@@ -46,6 +69,7 @@ int	main(int argc, char **argv)
 	}
 	test(global);
 	i = init_philo(global);
+	//printf("-------------BITE------------\n");
 	//ft_routine(argv);
 }
 

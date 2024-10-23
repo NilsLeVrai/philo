@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/22 15:00:19 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:16:11 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <limits.h>
+# include <sys/time.h>
 
 # define FORK "has taken a fork"
 # define EAT "is eating"
@@ -39,8 +40,8 @@ typedef struct s_global_data t_global;
 
 typedef struct s_forks
 {
-	int				fork_id;
-	t_mutex			mutex_fork;
+	int				fork_id; // si une fork a ete prise
+	t_mutex			mutex_fork; //controler l'acces a la fork
 }	t_forks;
 
 
@@ -62,7 +63,6 @@ typedef struct s_global_data
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			number_of_times_each_philosopher_must_eat;
-	long			start_time;
 	t_mutex			mutex;
 	t_philo			*philo;
 	t_forks			*forks;
@@ -77,8 +77,8 @@ void	check_outrange_int(int argc, char **argv);
 
 //init
 
-int		init_global(t_global *global);
-int		init_philo(char **argv, t_global *global);
+int		init_philo(t_global *global);
+int		init_global(char **argv, t_global *global);
 
 //routine
 

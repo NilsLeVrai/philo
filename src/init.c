@@ -6,22 +6,25 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:46:09 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/22 15:06:03 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:22:38 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int init_global(t_global *global)
+int init_philo(t_global *global)
 {
 	int i;
 
 	i = 0;
-	printf("number_of_philosophers = %d\n", global->number_of_philosophers);
+	global->philo = malloc(sizeof(t_philo) * global->number_of_philosophers);
+	if (!global->philo)
+		return (1);
 	while (i < global->number_of_philosophers)
 	{
+		if (pthread_mutex_init(&global->forks[i].mutex_fork, NULL))
+			return (1);
 		global->philo[i].philo_id = i + 1;
-		printf("le i: %d\n", i);
 		global->philo[i].last_meal = 0;
 		global->philo[i].meal_count = 0;
 		global->philo[i].thread_id = 0;
@@ -29,11 +32,14 @@ int init_global(t_global *global)
 		global->philo[i].right_fork = &global->forks[(i + 1) % global->number_of_philosophers];
 		global->philo[i].global = global;
 		i++;
+		if (pthread_mutex_init(&global->philo[i].left_fork->mutex_fork, NULL)) // ?
+			return (1);
+		printf("-------------BITE------------\n");
 	}
 	return (0);
 }
 
-int	init_philo(char **argv, t_global *philo)
+int	init_global(char **argv, t_global *philo)
 {
 	philo->number_of_philosophers = ft_atoi(argv[1]);
 	philo->time_to_die = ft_atoi(argv[2]);
