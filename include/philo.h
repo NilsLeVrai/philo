@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/28 16:12:49 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:41:41 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,17 @@
 
 typedef struct s_global_data t_global;
 typedef struct s_philo t_philo;
+
+typedef enum e_info
+{
+	INIT,
+	CREATE,
+	JOIN,
+	LOCK,
+	UNLOCK,
+	DESTROY
+}	t_info;
+
 typedef struct s_global_data
 {
 	int				number_of_philosophers;
@@ -77,11 +88,12 @@ int		init_global(char **argv, t_global *global);
 //routine
 
 long	get_current_time(void);
+void	print_info(t_global *global, char *info);
 void	*routine(void *argv);
 
 //threads
 
-void	philo(int a, int b, int c, int d);
+void mutex_safe(pthread_mutex_t *mutex, t_info info);
 
 //utils
 
