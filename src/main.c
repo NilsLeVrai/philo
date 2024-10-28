@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:11 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/28 16:12:09 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:55:38 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@ static void test(t_global *philo)
 	printf("" RESET);
 }
 
-/*
-global = valeurs des arguments
-philo = valeus propres a chaque philo
-*/
 
 int	main(int argc, char **argv)
 {

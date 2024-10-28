@@ -6,11 +6,20 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:46:09 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/28 16:13:00 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:04:03 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+long get_current_time(void)
+{
+	struct timeval	time;
+	
+	if (gettimeofday(&time, NULL))
+		return (-1);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
 
 static int init_philo2(t_global *global)
 {

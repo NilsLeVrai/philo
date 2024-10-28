@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/28 16:41:41 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:04:34 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void	check_outrange_int(int argc, char **argv);
 
 //init
 
-int		init_philo(t_global *global);
 int		init_global(char **argv, t_global *global);
+int		init_philo(t_global *global);
 
 //routine
 
