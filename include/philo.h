@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/23 16:16:11 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:12:49 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,20 @@
 # define CYAN "\033[1;36m"
 # define RESET "\033[0m"
 
-typedef pthread_mutex_t	t_mutex;
 typedef struct s_global_data t_global;
-
-typedef struct s_forks
+typedef struct s_philo t_philo;
+typedef struct s_global_data
 {
-	int				fork_id; // si une fork a ete prise
-	t_mutex			mutex_fork; //controler l'acces a la fork
-}	t_forks;
-
+	int				number_of_philosophers;
+	unsigned long	time_to_die;
+	unsigned long	time_to_eat;
+	unsigned long	time_to_sleep;
+	unsigned long	start_time;
+	int				loop;
+	pthread_mutex_t	mutex_print; // control access to print
+	pthread_mutex_t	mutex_dead; // control access to death
+	t_philo			*philo;
+}	t_global;
 
 typedef struct s_philo
 {
@@ -51,22 +56,11 @@ typedef struct s_philo
 	long			last_meal;
 	long			meal_count;
 	pthread_t		thread_id;
-	t_forks			*left_fork;
-	t_forks			*right_fork;
+	pthread_mutex_t	left_fork;
+	pthread_mutex_t	*right_fork;
 	t_global		*global;
 }	t_philo;
 
-typedef struct s_global_data
-{
-	int				number_of_philosophers;
-	long			time_to_die;
-	long			time_to_eat;
-	long			time_to_sleep;
-	long			number_of_times_each_philosopher_must_eat;
-	t_mutex			mutex;
-	t_philo			*philo;
-	t_forks			*forks;
-}	t_global;
 
 //errors
 
@@ -82,7 +76,8 @@ int		init_global(char **argv, t_global *global);
 
 //routine
 
-void	ft_routine(char **argv);
+long	get_current_time(void);
+void	*routine(void *argv);
 
 //threads
 

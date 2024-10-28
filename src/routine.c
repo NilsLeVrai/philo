@@ -6,13 +6,31 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:45:42 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/22 14:42:52 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:21:21 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	ft_routine(char **argv)
+/*
+philo impair mangent en premier
+
+*/
+
+long get_current_time(void)
 {
-	(void)argv;
+	struct timeval	time;
+	
+	if (gettimeofday(&time, NULL))
+		return (-1);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
+void	*routine(void *argv)
+{
+	t_philo *philo;
+
+	philo = (t_philo *)argv;
+	if (philo->philo_id % 2)
+		usleep(100);
 }

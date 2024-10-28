@@ -6,11 +6,40 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:46:09 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/23 16:40:48 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:13:00 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+static int init_philo2(t_global *global)
+{
+	int	i;
+
+	i = 0;
+	while (i < global->number_of_philosophers - 1)
+	{
+		global->philo[i].right_fork = &global->philo[i + 1].left_fork;
+		i++;
+	}
+	global->philo[i].right_fork = &global->philo[0].left_fork;
+	global->start_time = get_current_time();
+	i = 0;
+	while (i < global->number_of_philosophers)
+	{
+		if (pthread_create(&global->philo[i].thread_id, NULL, &routine, &global->philo[i]))
+			return (1);
+		i++;
+	}
+	i = 0;
+	while (i < global->number_of_philosophers)
+	{
+		if (pthread_join(global->philo[i].thread_id, NULL))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int init_philo(t_global *global)
 {
@@ -20,22 +49,22 @@ int init_philo(t_global *global)
 	global->philo = malloc(sizeof(t_philo) * global->number_of_philosophers);
 	if (!global->philo)
 		return (1);
+	if (pthread_mutex_init(&global->mutex_print, NULL))
+		return (1);
+	if (pthread_mutex_init(&global->mutex_dead, NULL))
+		return (1);
 	while (i < global->number_of_philosophers)
 	{
-		if (pthread_mutex_init(&global->forks[i].mutex_fork, NULL))
-			return (1);
 		global->philo[i].philo_id = i + 1;
 		global->philo[i].last_meal = 0;
 		global->philo[i].meal_count = 0;
 		global->philo[i].thread_id = 0;
-		global->philo[i].left_fork = &global->forks[i];
-		global->philo[i].right_fork = &global->forks[(i + 1) % global->number_of_philosophers];
+		if (pthread_mutex_init(&global->philo[i].left_fork, NULL))
+			return (1);
 		global->philo[i].global = global;
 		i++;
-		if (pthread_mutex_init(&global->philo[i].left_fork->mutex_fork, NULL)) // ?
-			return (1);
-		printf("-------------BITE------------\n");
 	}
+	init_philo2(global);
 	return (0);
 }
 
@@ -46,14 +75,8 @@ int	init_global(char **argv, t_global *philo)
 	philo->time_to_eat = ft_atoi(argv[3]);
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
-		philo->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
+		philo->loop = ft_atoi(argv[5]);
 	else
-		philo->number_of_times_each_philosopher_must_eat = -1;
-	philo->forks = malloc(sizeof(int) * philo->number_of_philosophers);
-	if (!philo->forks)
-	{
-		ft_putstr_fd("Malloc failed.\n", 2);
-		exit(EXIT_FAILURE);
-	}
+		philo->loop = -1;
 	return (0);
 }
