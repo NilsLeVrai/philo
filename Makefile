@@ -2,6 +2,7 @@ NAME = philo
 
 SOURCES_FILES = errors.c \
 				init.c \
+				libft_functions.c \
 				main.c \
 				routine.c \
 				threads.c \

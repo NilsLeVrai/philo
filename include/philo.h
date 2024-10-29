@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/28 18:04:34 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:18:38 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@
 typedef struct s_global_data t_global;
 typedef struct s_philo t_philo;
 
+typedef enum e_state
+{
+	FORKING,
+	EATING,
+	SLEEPING,
+	DEAD,
+	THINKING,
+}	t_state;
+
 typedef enum e_info
 {
 	INIT,
@@ -51,11 +60,12 @@ typedef enum e_info
 typedef struct s_global_data
 {
 	int				number_of_philosophers;
+	int 			check_error;
 	unsigned long	time_to_die;
 	unsigned long	time_to_eat;
 	unsigned long	time_to_sleep;
 	unsigned long	start_time;
-	int				loop;
+	int				loop; // 0 = dead, 1 = alive
 	pthread_mutex_t	mutex_print; // control access to print
 	pthread_mutex_t	mutex_dead; // control access to death
 	t_philo			*philo;
@@ -64,7 +74,7 @@ typedef struct s_global_data
 typedef struct s_philo
 {
 	int				philo_id;
-	long			last_meal;
+	unsigned long	last_meal;
 	long			meal_count;
 	pthread_t		thread_id;
 	pthread_mutex_t	left_fork;
@@ -85,22 +95,28 @@ void	check_outrange_int(int argc, char **argv);
 int		init_global(char **argv, t_global *global);
 int		init_philo(t_global *global);
 
-//routine
-
-long	get_current_time(void);
-void	print_info(t_global *global, char *info);
-void	*routine(void *argv);
-
-//threads
-
-void mutex_safe(pthread_mutex_t *mutex, t_info info);
-
-//utils
+//libft_functions
 
 int		ft_atoi(const char *nptr);
 long	ft_atol(const char *nptr);
 int		ft_isdigit(int c);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
+
+//routine
+
+void	print_info(t_global *global, t_state info);
+long	get_starting_time(void);
+long	get_elapsed_time(t_global *global);
+void	*routine(void *argv);
+int 	check_death(t_philo *philo);
+
+//threads
+
+void	mutex_safe(pthread_mutex_t *mutex, t_info info);
+
+//utils
+
+void	destroy_and_free(t_global *global);
 
 #endif

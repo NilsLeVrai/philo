@@ -6,13 +6,22 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:46:09 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/28 18:04:03 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/29 13:16:23 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-long get_current_time(void)
+long get_elapsed_time(t_global *global)
+{
+	struct timeval	time;
+	
+	if (gettimeofday(&time, NULL))
+		return (-1);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000) - global->start_time);
+}
+
+long get_starting_time(void)
 {
 	struct timeval	time;
 	
@@ -21,7 +30,7 @@ long get_current_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-static int init_philo2(t_global *global)
+static void init_philo2(t_global *global)
 {
 	int	i;
 
@@ -32,22 +41,27 @@ static int init_philo2(t_global *global)
 		i++;
 	}
 	global->philo[i].right_fork = &global->philo[0].left_fork;
-	global->start_time = get_current_time();
+	global->start_time = get_starting_time();
 	i = 0;
 	while (i < global->number_of_philosophers)
 	{
 		if (pthread_create(&global->philo[i].thread_id, NULL, &routine, &global->philo[i]))
-			return (1);
+		{
+			global->check_error = 1;
+			destroy_and_free(global);
+		}
 		i++;
 	}
 	i = 0;
 	while (i < global->number_of_philosophers)
 	{
 		if (pthread_join(global->philo[i].thread_id, NULL))
-			return (1);
+		{
+			global->check_error = 2;
+			destroy_and_free(global);
+		}
 		i++;
 	}
-	return (0);
 }
 
 int init_philo(t_global *global)
@@ -83,9 +97,10 @@ int	init_global(char **argv, t_global *philo)
 	philo->time_to_die = ft_atoi(argv[2]);
 	philo->time_to_eat = ft_atoi(argv[3]);
 	philo->time_to_sleep = ft_atoi(argv[4]);
+	philo->check_error = 0;
 	if (argv[5])
 		philo->loop = ft_atoi(argv[5]);
 	else
-		philo->loop = -1;
+		philo->loop = 1; // all good. 0 if end of program
 	return (0);
 }
