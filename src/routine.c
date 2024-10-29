@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:45:42 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/29 15:25:06 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:30:17 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	*routine(void *argv)
 	while (!philo->global->loop)
 	{
 		mutex_safe(&philo->left_fork, LOCK);
+		print_info(philo->global, FORKING);
+		print_info(philo->global, EATING);
 /* 		ft_eating(philo);
 		ft_sleeping(philo);
 		ft_thinking(philo); */
