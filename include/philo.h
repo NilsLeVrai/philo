@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: niabraha <niabraha@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/29 15:18:38 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/02 18:48:55 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # define CYAN "\033[1;36m"
 # define RESET "\033[0m"
 
-typedef struct s_global_data t_global;
-typedef struct s_philo t_philo;
+typedef struct s_global_data	t_global;
+typedef struct s_philo			t_philo;
 
 typedef enum e_state
 {
@@ -60,7 +60,7 @@ typedef enum e_info
 typedef struct s_global_data
 {
 	int				number_of_philosophers;
-	int 			check_error;
+	int				check_error;
 	unsigned long	time_to_die;
 	unsigned long	time_to_eat;
 	unsigned long	time_to_sleep;
@@ -81,7 +81,6 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	t_global		*global;
 }	t_philo;
-
 
 //errors
 
@@ -107,9 +106,9 @@ void	ft_putstr_fd(char *s, int fd);
 
 void	print_info(t_global *global, t_state info);
 long	get_starting_time(void);
-long	get_elapsed_time(t_global *global);
+long	time_n(t_global *global);
 void	*routine(void *argv);
-int 	check_death(t_philo *philo);
+int		check_death(t_philo *philo);
 
 //threads
 

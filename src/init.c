@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: niabraha <niabraha@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:46:09 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/29 13:16:23 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/02 19:00:38 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-long get_elapsed_time(t_global *global)
+long	time_n(t_global *global)
 {
 	struct timeval	time;
-	
+
 	if (gettimeofday(&time, NULL))
 		return (-1);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000) - global->start_time);
 }
 
-long get_starting_time(void)
+long	get_starting_time(void)
 {
 	struct timeval	time;
-	
+
 	if (gettimeofday(&time, NULL))
 		return (-1);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-static void init_philo2(t_global *global)
+static void	init_philo2(t_global *global)
 {
 	int	i;
 
@@ -48,6 +48,7 @@ static void init_philo2(t_global *global)
 		if (pthread_create(&global->philo[i].thread_id, NULL, &routine, &global->philo[i]))
 		{
 			global->check_error = 1;
+			printf("Error creating threads.\n");
 			destroy_and_free(global);
 		}
 		i++;
@@ -58,15 +59,16 @@ static void init_philo2(t_global *global)
 		if (pthread_join(global->philo[i].thread_id, NULL))
 		{
 			global->check_error = 2;
+			printf("Error joining threads.\n");
 			destroy_and_free(global);
 		}
 		i++;
 	}
 }
 
-int init_philo(t_global *global)
+int	init_philo(t_global *global)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	global->philo = malloc(sizeof(t_philo) * global->number_of_philosophers);
@@ -101,6 +103,6 @@ int	init_global(char **argv, t_global *philo)
 	if (argv[5])
 		philo->loop = ft_atoi(argv[5]);
 	else
-		philo->loop = 1; // all good. 0 if end of program
+		philo->loop = 1;
 	return (0);
 }

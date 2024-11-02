@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: niabraha <niabraha@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:14:47 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/28 16:39:50 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/02 18:35:53 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void mutex_safe(pthread_mutex_t *mutex, t_info info)
+void	mutex_safe(pthread_mutex_t *mutex, t_info info)
 {
-	int check;
+	int	check;
 
 	check = 0;
 	if (info == INIT)
