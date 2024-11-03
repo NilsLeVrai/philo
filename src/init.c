@@ -6,13 +6,13 @@
 /*   By: niabraha <niabraha@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:46:09 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/02 19:00:38 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/03 23:11:21 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-long	time_n(t_global *global)
+long get_elapsed_time(t_global *global)
 {
 	struct timeval	time;
 
@@ -82,8 +82,8 @@ int	init_philo(t_global *global)
 	{
 		global->philo[i].philo_id = i + 1;
 		global->philo[i].last_meal = 0;
-		global->philo[i].meal_count = 0;
 		global->philo[i].thread_id = 0;
+		global->philo[i].current_meal_count = 0;
 		if (pthread_mutex_init(&global->philo[i].left_fork, NULL))
 			return (1);
 		global->philo[i].global = global;
@@ -101,8 +101,8 @@ int	init_global(char **argv, t_global *philo)
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	philo->check_error = 0;
 	if (argv[5])
-		philo->loop = ft_atoi(argv[5]);
+		philo->total_meal= ft_atoi(argv[5]);
 	else
-		philo->loop = 1;
+		philo->total_meal = -1; // infinite
 	return (0);
 }

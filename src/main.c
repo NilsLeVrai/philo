@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:11 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/02 18:43:25 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/03 22:50:02 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Malloc failed.\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	routine(global);
+	loop_check(global);
 	destroy_and_free(global);
 }
 

@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/02 18:48:55 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/03 23:11:16 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,12 @@ typedef struct s_global_data
 {
 	int				number_of_philosophers;
 	int				check_error;
+	int				end;
 	unsigned long	time_to_die;
 	unsigned long	time_to_eat;
 	unsigned long	time_to_sleep;
 	unsigned long	start_time;
-	int				loop; // 0 = dead, 1 = alive
+	int				total_meal;
 	pthread_mutex_t	mutex_print; // control access to print
 	pthread_mutex_t	mutex_dead; // control access to death
 	t_philo			*philo;
@@ -75,7 +76,7 @@ typedef struct s_philo
 {
 	int				philo_id;
 	unsigned long	last_meal;
-	long			meal_count;
+	int				current_meal_count;
 	pthread_t		thread_id;
 	pthread_mutex_t	left_fork;
 	pthread_mutex_t	*right_fork;
@@ -106,13 +107,14 @@ void	ft_putstr_fd(char *s, int fd);
 
 void	print_info(t_global *global, t_state info);
 long	get_starting_time(void);
-long	time_n(t_global *global);
+long	get_elapsed_time(t_global *global);
 void	*routine(void *argv);
 int		check_death(t_philo *philo);
 
 //threads
 
 void	mutex_safe(pthread_mutex_t *mutex, t_info info);
+int loop_check(t_global *global);
 
 //utils
 
