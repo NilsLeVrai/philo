@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/04 16:43:22 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:49:32 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,6 @@ int		pthread_safe(t_philo *philo, t_info info);
 
 //utils
 
-void	destroy_and_free(t_global *global, t_philo *philo);
+void	destroy_and_free(t_global *global, t_philo **philo);
 
 #endif

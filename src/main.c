@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:11 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/04 16:41:11 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:15:43 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	if (init_everything(&global, &philo))
 		exit(EXIT_FAILURE);
-	destroy_and_free(&global, philo);
+	destroy_and_free(&global, &philo);
 }
