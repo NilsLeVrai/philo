@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:46:09 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/04 16:41:28 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:33:03 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,13 @@ int	init_everything(t_global *global, t_philo **philo)
 	while (++i < global->number_of_philosophers)
 	{
 		if (pthread_safe(&(*philo)[i], CREATE))
-			return (destroy_and_free(global, *philo), 1);
+			return (destroy_and_free(global, philo), 1);
 	}
 	i = -1;
 	while (++i < global->number_of_philosophers)
 	{
 		if (pthread_safe(&(*philo)[i], JOIN))
-			return (destroy_and_free(global, *philo), 1);
+			return (destroy_and_free(global, philo), 1);
 	}
 	return (0);
 }
