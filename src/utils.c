@@ -6,13 +6,13 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:35:55 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/04 15:58:24 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:28:45 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-long get_elapsed_time(t_global *global)
+long	get_elapsed_time(t_global *global)
 {
 	struct timeval	time;
 

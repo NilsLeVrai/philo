@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/04 16:15:12 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:43:22 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,13 @@ typedef struct s_philo
 	t_philo			*next;
 }	t_philo;
 
+//check
+
+int		check_death(t_philo *philo);
+int		check_full(t_philo *philo);
+int		check_print(t_philo *philo);
+int		check_starvation(t_philo *philo);
+
 //errors
 
 void	check_errors(int argc, char **argv);
@@ -107,14 +114,11 @@ void	print_info(t_philo *philo, t_state info);
 long	get_starting_time(void);
 long	get_elapsed_time(t_global *global);
 void	*routine(void *argv);
-int		check_full(t_philo *philo);
-int		check_death(t_philo *philo);
-int		check_starvation(t_philo *philo);
 
 //threads
 
 void	mutex_safe(pthread_mutex_t *mutex, t_info info);
-int pthread_safe(t_philo *philo, t_info info);
+int		pthread_safe(t_philo *philo, t_info info);
 
 //utils
 

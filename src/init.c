@@ -6,20 +6,20 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:46:09 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/04 15:58:13 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:41:28 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int pthread_safe(t_philo *philo, t_info info)
+int	pthread_safe(t_philo *philo, t_info info)
 {
-	int check;
+	int	check;
 
 	check = 0;
 	if (info == CREATE)
 	{
-		check = pthread_create(&philo->thread_id, NULL, &routine, philo); // &routine or routine?
+		check = pthread_create(&philo->thread_id, NULL, &routine, philo);
 		if (check)
 		{
 			printf("Thread creation failed\n");
@@ -73,7 +73,8 @@ int	init_philo(t_global *global, t_philo *philo, int i)
 		philo[i].next = &philo[i + 1];
 	return (0);
 }
-int init_everything(t_global *global, t_philo **philo)
+
+int	init_everything(t_global *global, t_philo **philo)
 {
 	int	i;
 
@@ -90,13 +91,13 @@ int init_everything(t_global *global, t_philo **philo)
 	while (++i < global->number_of_philosophers)
 	{
 		if (pthread_safe(&(*philo)[i], CREATE))
-			destroy_and_free(global, *philo);
+			return (destroy_and_free(global, *philo), 1);
 	}
 	i = -1;
 	while (++i < global->number_of_philosophers)
 	{
 		if (pthread_safe(&(*philo)[i], JOIN))
-			destroy_and_free(global, *philo);
+			return (destroy_and_free(global, *philo), 1);
 	}
 	return (0);
 }
@@ -111,6 +112,6 @@ int	init_global(char **argv, t_global *global)
 	if (argv[5])
 		global->loop = ft_atoi(argv[5]);
 	else
-		global->loop = -1; // infinite
+		global->loop = -1;
 	return (0);
 }

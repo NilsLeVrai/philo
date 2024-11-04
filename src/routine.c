@@ -6,21 +6,13 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:45:42 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/04 16:25:26 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:33:28 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-/* 
-	print_info(philo->global, FORKING);
-	print_info(philo->global, EATING);
-	print_info(philo->global, SLEEPING);
-	print_info(philo->global, THINKING);
-	print_info(philo->global, DEAD);
- */
-
-static int ft_sleep_and_think(t_philo *philo)
+static int	ft_sleep_and_think(t_philo *philo)
 {
 	if (check_full(philo))
 		return (1);
@@ -30,7 +22,7 @@ static int ft_sleep_and_think(t_philo *philo)
 	return (0);
 }
 
-static int ft_eat_even(t_philo *philo)
+static int	ft_eat_even(t_philo *philo)
 {
 	if (check_full(philo))
 		return (1);
@@ -47,7 +39,7 @@ static int ft_eat_even(t_philo *philo)
 	return (0);
 }
 
-static int ft_eat_odd(t_philo *philo)
+static int	ft_eat_odd(t_philo *philo)
 {
 	if (check_full(philo))
 		return (1);
@@ -64,7 +56,7 @@ static int ft_eat_odd(t_philo *philo)
 	return (0);
 }
 
-static int ft_eat(t_philo *philo)
+static int	ft_eat(t_philo *philo)
 {
 	if (philo->philo_id % 2)
 		ft_eat_odd(philo);
