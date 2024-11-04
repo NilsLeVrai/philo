@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   libft_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:20:01 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/22 12:51:10 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:47:55 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ long	ft_atol(const char *nptr)
 		if ((res > INT_MAX && neg == 1) || \
 		(res > (long)INT_MAX + 1 && neg == -1))
 		{
-			ft_putstr_fd("Error\n", 2);
+			ft_putstr_fd("Arguments are out of range.\n", 2);
 			exit(EXIT_FAILURE);
 		}
 		nptr++;

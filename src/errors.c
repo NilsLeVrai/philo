@@ -6,13 +6,13 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:13:24 by niabraha          #+#    #+#             */
-/*   Updated: 2024/10/22 12:42:26 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:57:26 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	check_outrange_int(int argc, char **argv)
+static void	check_outrange_and_neg(int argc, char **argv)
 {
 	int	i;
 
@@ -26,9 +26,19 @@ void	check_outrange_int(int argc, char **argv)
 		}
 		i++;
 	}
+	i = 1;
+	while (i < argc)
+	{
+		if (ft_atol(argv[i]) <= 0)
+		{
+			ft_putstr_fd("Arguments can't be negative or equal to zero.\n", 2);
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
 }
 
-void	check_not_number(int argc, char **argv)
+static void	check_not_number(int argc, char **argv)
 {
 	int	i;
 	int	j;
@@ -54,7 +64,7 @@ void	check_not_number(int argc, char **argv)
 	}
 }
 
-void	check_args(int argc)
+static void	check_args(int argc)
 {
 	if (argc < 5 || argc > 6)
 	{
@@ -68,5 +78,5 @@ void	check_errors(int argc, char **argv)
 {
 	check_args(argc);
 	check_not_number(argc, argv);
-	check_outrange_int(argc, argv);
+	check_outrange_and_neg(argc, argv);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niabraha <niabraha@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/03 23:11:16 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:15:12 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,14 @@ typedef enum e_info
 typedef struct s_global_data
 {
 	int				number_of_philosophers;
-	int				check_error;
-	int				end;
 	unsigned long	time_to_die;
 	unsigned long	time_to_eat;
 	unsigned long	time_to_sleep;
+	int				loop;
 	unsigned long	start_time;
-	int				total_meal;
-	pthread_mutex_t	mutex_print; // control access to print
+	int				end_of_simulation;
 	pthread_mutex_t	mutex_dead; // control access to death
-	t_philo			*philo;
+	pthread_mutex_t	mutex_print; // control access to print
 }	t_global;
 
 typedef struct s_philo
@@ -77,23 +75,23 @@ typedef struct s_philo
 	int				philo_id;
 	unsigned long	last_meal;
 	int				current_meal_count;
+	int				is_full;
 	pthread_t		thread_id;
-	pthread_mutex_t	left_fork;
-	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	fork_lock;
+	int				fork;
 	t_global		*global;
+	t_philo			*next;
 }	t_philo;
 
 //errors
 
-void	check_args(int argc);
 void	check_errors(int argc, char **argv);
-void	check_not_number(int argc, char **argv);
-void	check_outrange_int(int argc, char **argv);
 
 //init
 
 int		init_global(char **argv, t_global *global);
-int		init_philo(t_global *global);
+int		init_everything(t_global *global, t_philo **philo);
+int		init_philo(t_global *global, t_philo *philo, int i);
 
 //libft_functions
 
@@ -105,19 +103,21 @@ void	ft_putstr_fd(char *s, int fd);
 
 //routine
 
-void	print_info(t_global *global, t_state info);
+void	print_info(t_philo *philo, t_state info);
 long	get_starting_time(void);
 long	get_elapsed_time(t_global *global);
 void	*routine(void *argv);
+int		check_full(t_philo *philo);
 int		check_death(t_philo *philo);
+int		check_starvation(t_philo *philo);
 
 //threads
 
 void	mutex_safe(pthread_mutex_t *mutex, t_info info);
-int loop_check(t_global *global);
+int pthread_safe(t_philo *philo, t_info info);
 
 //utils
 
-void	destroy_and_free(t_global *global);
+void	destroy_and_free(t_global *global, t_philo *philo);
 
 #endif

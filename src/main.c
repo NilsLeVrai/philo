@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niabraha <niabraha@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:11 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/03 22:50:02 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:40:29 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,20 @@
 
 int	main(int argc, char **argv)
 {
-	t_global	*global;
-	int			i;
+	t_global	global;
+	t_philo		*philo;
 
-	i = 0;
+	philo = NULL;
 	check_errors(argc, argv);
-	global = malloc(sizeof(t_global));
-	if (!global)
+	if (init_global(argv, &global) == 1)
 	{
 		ft_putstr_fd("Malloc failed.\n", 2);
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE); // fonction pour tout free
 	}
-	if (init_global(argv, global))
-	{
-		ft_putstr_fd("Parsing failed.\n", 2);
-		exit(EXIT_FAILURE);
-	}
-	i = init_philo(global);
-	if (i)
+	if (init_everything(&global, &philo) == 1)
 	{
 		ft_putstr_fd("Malloc failed.\n", 2);
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE); // fonction pour tout free
 	}
-	loop_check(global);
-	destroy_and_free(global);
+	destroy_and_free(&global, philo);
 }
-
-/*
-chopper le temps
-temps = temps ecoule depuis le debut du programme
-last_eat important pour voir si le philo est alvie ou dead in the head
-eat_count 
-
-
-chaque philo cree sa fork de droite
-prend en pointeur la fourchette de gauche
-
-*/

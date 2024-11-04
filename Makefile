@@ -1,6 +1,7 @@
 NAME = philo
 
-SOURCES_FILES = errors.c \
+SOURCES_FILES = check.c \
+				errors.c \
 				init.c \
 				libft_functions.c \
 				main.c \

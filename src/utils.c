@@ -3,30 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niabraha <niabraha@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:35:55 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/02 18:45:13 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:58:24 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	destroy_and_free(t_global *global)
+long get_elapsed_time(t_global *global)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL))
+		return (-1);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000) - global->start_time);
+}
+
+long	get_starting_time(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL))
+		return (-1);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
+void	destroy_and_free(t_global *global, t_philo *philo)
 {
 	int	i;
 
 	i = 0;
-	if (global->check_error == 1)
-		printf("Error creating threads.\n");
-	else if (global->check_error == 2)
-		printf("Error joining threads.\n");
 	while (i < global->number_of_philosophers)
 	{
-		pthread_mutex_destroy(&global->philo[i].left_fork);
+		pthread_mutex_destroy(&philo[i].fork_lock);
 		i++;
 	}
 	pthread_mutex_destroy(&global->mutex_print);
 	pthread_mutex_destroy(&global->mutex_dead);
-	free(global->philo);
+	free(philo);
+	free(global);
 }
