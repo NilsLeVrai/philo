@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:35:55 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/04 17:15:51 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:07:26 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 long	get_elapsed_time(t_global *global)
 {
 	struct timeval	time;
+	unsigned long start_time;
 
+	start_time = global->start_time;
 	if (gettimeofday(&time, NULL))
 		return (-1);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000) - global->start_time);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000) - start_time);
 }
 
-long	get_starting_time(void)
+long	get_current_time(void)
 {
 	struct timeval	time;
 

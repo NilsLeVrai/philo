@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 15:59:47 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/04 16:43:11 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:29:55 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ int	check_print(t_philo *philo)
 
 int	check_starvation(t_philo *philo)
 {
-	if (get_starting_time() - philo->last_meal > philo->global->time_to_die)
+/* 	printf("check_starvation\n");
+	printf("get_current_time: %lu\n", get_current_time());
+	printf("last_meal: %lu\n", philo->last_meal);
+	printf("get_current_time - last_meal: %lu\n", get_current_time() - philo->last_meal); */
+	if (get_current_time() - philo->last_meal >= philo->global->time_to_die)
 	{
 		if (philo->global->end_of_simulation == 0)
 			print_info(philo, DEAD);

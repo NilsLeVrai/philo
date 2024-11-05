@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:46:09 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/04 17:33:03 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:23:37 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,33 +44,45 @@ void	mutex_safe(pthread_mutex_t *mutex, t_info info)
 
 	check = 0;
 	if (info == INIT)
-		check = pthread_mutex_init(mutex, NULL);
-	else if (info == LOCK)
-		check = pthread_mutex_lock(mutex);
-	else if (info == UNLOCK)
-		check = pthread_mutex_unlock(mutex);
-	else if (info == DESTROY)
-		check = pthread_mutex_destroy(mutex);
-	if (check)
 	{
-		printf("Mutex failed\n");
+		check = pthread_mutex_init(mutex, NULL);
+		check= 1;
+	}
+	else if (info == LOCK)
+	{
+		check = pthread_mutex_lock(mutex);
+		check = 2;
+	}
+	else if (info == UNLOCK)
+	{
+		check = pthread_mutex_unlock(mutex);
+		check = 3;
+	}
+	else if (info == DESTROY)
+	{
+		check = pthread_mutex_destroy(mutex);
+		check = 4;
+	}
+	if (!check)
+	{
+		printf("Mutex failed: %d\n", check);
 		exit(EXIT_FAILURE);
 	}
 }
 
 int	init_philo(t_global *global, t_philo *philo, int i)
 {
-	philo[i].philo_id = i + 1;
-	philo[i].global = global;
-	philo[i].current_meal_count = 0;
-	philo[i].last_meal = get_starting_time();
-	philo[i].is_full = 0;
-	philo[i].fork = 1;
-	mutex_safe(&philo[i].fork_lock, INIT);
-	if (global->number_of_philosophers - 1 == i)
-		philo[i].next = &philo[0];
+	(philo)[i].philo_id = i + 1;
+	(philo)[i].global = global;
+	(philo)[i].current_meal_count = 0;
+	(philo)[i].last_meal = get_current_time();
+	(philo)[i].is_full = 0;
+	(philo)[i].fork = 1;
+	mutex_safe(&(philo)[i].fork_lock, INIT);
+	if (i == global->number_of_philosophers - 1)
+		(philo)[i].next = &(philo)[0];
 	else
-		philo[i].next = &philo[i + 1];
+		(philo)[i].next = &(philo)[i + 1];
 	return (0);
 }
 
@@ -84,7 +96,7 @@ int	init_everything(t_global *global, t_philo **philo)
 		return (1);
 	mutex_safe(&global->mutex_dead, INIT);
 	mutex_safe(&global->mutex_print, INIT);
-	global->start_time = get_starting_time();
+	global->start_time = get_current_time();
 	while (++i < global->number_of_philosophers)
 		init_philo(global, *philo, i);
 	i = -1;

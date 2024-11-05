@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/04 17:30:41 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:39:39 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	ft_putstr_fd(char *s, int fd);
 //routine
 
 void	print_info(t_philo *philo, t_state info);
-long	get_starting_time(void);
+long	get_current_time(void);
 long	get_elapsed_time(t_global *global);
 void	*routine(void *argv);
 
