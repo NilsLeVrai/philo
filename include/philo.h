@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:03:58 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/05 13:39:39 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:54:31 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int		check_death(t_philo *philo);
 int		check_full(t_philo *philo);
 int		check_print(t_philo *philo);
 int		check_starvation(t_philo *philo);
+void	print_info(t_philo *philo, t_state info);
 
 //errors
 
@@ -96,9 +97,11 @@ void	check_errors(int argc, char **argv);
 
 //init
 
-int		init_global(char **argv, t_global *global);
 int		init_everything(t_global *global, t_philo **philo);
+int		init_global(char **argv, t_global *global);
 int		init_philo(t_global *global, t_philo *philo, int i);
+int		pthread_safe(t_philo *philo, t_info info);
+void	mutex_safe(pthread_mutex_t *mutex, t_info info);
 
 //libft_functions
 
@@ -110,18 +113,22 @@ void	ft_putstr_fd(char *s, int fd);
 
 //routine
 
-void	print_info(t_philo *philo, t_state info);
-long	get_current_time(void);
-long	get_elapsed_time(t_global *global);
+int		ft_eat(t_philo *philo);
+int		ft_eat_even(t_philo *philo);
+int		ft_eat_odd(t_philo *philo);
+int		ft_fork(t_philo *philo, pthread_mutex_t *fork_lock, int *fork);
+int		ft_sleep_and_think(t_philo *philo);
+
+//main
+
 void	*routine(void *argv);
-
-//threads
-
-void	mutex_safe(pthread_mutex_t *mutex, t_info info);
-int		pthread_safe(t_philo *philo, t_info info);
 
 //utils
 
+int		ft_usleep_dead(unsigned long time, t_philo *philo);
+int		ft_usleep_eat(unsigned long time, t_philo *philo);
+long	get_current_time(void);
+long	get_elapsed_time(t_global *global);
 void	destroy_and_free(t_global *global, t_philo **philo);
 
 #endif

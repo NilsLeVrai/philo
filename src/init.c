@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:46:09 by niabraha          #+#    #+#             */
-/*   Updated: 2024/11/05 15:23:37 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:58:31 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	pthread_safe(t_philo *philo, t_info info)
 	check = 0;
 	if (info == CREATE)
 	{
-		check = pthread_create(&philo->thread_id, NULL, &routine, philo);
+		check = pthread_create(&philo->thread_id, NULL, routine, philo);
 		if (check)
 		{
 			printf("Thread creation failed\n");
@@ -44,28 +44,19 @@ void	mutex_safe(pthread_mutex_t *mutex, t_info info)
 
 	check = 0;
 	if (info == INIT)
-	{
 		check = pthread_mutex_init(mutex, NULL);
-		check= 1;
-	}
 	else if (info == LOCK)
-	{
 		check = pthread_mutex_lock(mutex);
-		check = 2;
-	}
 	else if (info == UNLOCK)
-	{
 		check = pthread_mutex_unlock(mutex);
-		check = 3;
-	}
 	else if (info == DESTROY)
 	{
-		check = pthread_mutex_destroy(mutex);
-		check = 4;
+		if (pthread_mutex_destroy(mutex))
+			printf("Mutex destroy failed\n");
 	}
-	if (!check)
+	if (check != 0)
 	{
-		printf("Mutex failed: %d\n", check);
+		printf("Mutex failed %d\n", check);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -75,7 +66,7 @@ int	init_philo(t_global *global, t_philo *philo, int i)
 	(philo)[i].philo_id = i + 1;
 	(philo)[i].global = global;
 	(philo)[i].current_meal_count = 0;
-	(philo)[i].last_meal = get_current_time();
+	(philo)[i].last_meal = global->start_time;
 	(philo)[i].is_full = 0;
 	(philo)[i].fork = 1;
 	mutex_safe(&(philo)[i].fork_lock, INIT);

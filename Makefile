@@ -6,7 +6,6 @@ SOURCES_FILES = check.c \
 				libft_functions.c \
 				main.c \
 				routine.c \
-				threads.c \
 				utils.c
 
 SRCS_P_DIR = src
